@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Showcase</title>
+    <style>
+        /* General Reset & Accessibility */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fafafa;
+            color: #222;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover, a:focus {
+            text-decoration: underline;
+        }
+
+        /* Skip link (visible on focus) */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #000;
+            color: #fff;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 10px;
+        }
+
+        /* Header & Nav */
+        header {
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        nav a {
+            font-weight: bold;
+            color: #ffeb3b;
+            padding: 5px 10px;
+        }
+
+        nav a:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        /* View Selector */
+        .view-selector {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+
+        .view-selector label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .view-selector select {
+            padding: 8px 15px;
+            border: 2px solid #0066cc;
+            border-radius: 4px;
+            background: white;
+            font-size: 1rem;
+        }
+
+        /* Main content */
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        p {
+            max-width: 700px;
+            margin: 0 auto 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Gallery Base (Mobile First) */
+        .gallery {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        figure {
+            margin: 0;
+            padding: 15px;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        figure:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        figure img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-radius: 4px;
+        }
+
+        figcaption {
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+        }
+
+        /* Back to top button styling */
+        #backToTop {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #0066cc;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        #backToTop:hover {
+            background-color: #004d99;
+        }
+
+        /* Tablet View */
+        .tablet-view .gallery {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .tablet-view figure {
+            border-radius: 50%;
+            overflow: hidden;
+            padding: 15px;
+        }
+        
+        .tablet-view figure img {
+            border-radius: 50%;
+            height: 180px;
+        }
+
+        .tablet-view figure:last-child {
+            grid-column: 1 / span 2;
+        }
+
+        /* Desktop View */
+        .desktop-view .gallery {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .desktop-view figure {
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .desktop-view figure img {
+            border-radius: 4px;
+            height: 200px;
+        }
+
+        .desktop-view figure:nth-child(3n) {
+            grid-column: span 2;
+        }
+
+        /* Prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            html, body {
+                scroll-behavior: auto;
+            }
+
+            figure {
+                transition: none;
+            }
+        }
+
+        /* Dark Mode */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #121212;
+                color: #eee;
+            }
+
+            header {
+                background: #000;
+            }
+
+            nav a {
+                color: #ffeb3b;
+            }
+
+            figure {
+                background: #333;
+                border-color: #000;
+            }
+            
+            figcaption {
+                color: #ffeb3b;
+            }
+            
+            .view-selector {
+                background: #333;
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body class="mobile-view">
+    <!-- Skip link for accessibility -->
+    <a href="#maincontent" class="skip-link">Skip to Main Content</a>
+
+    <header>
+        <h1 id="top">Colors of Life</h1>
+        <nav>
+            <a href="#gallery">Gallery</a>
+            <a href="#about">About</a>
+            <a href="#top" id="backToTop">Back to Top</a>
+        </nav>
+    </header>
+    
+    <!-- View Selector -->
+    <div class="view-selector">
+        <label for="layoutSelect">Select View: </label>
+        <select id="layoutSelect">
+            <option value="mobile">Mobile View</option>
+            <option value="tablet">Tablet View</option>
+            <option value="desktop">Desktop View</option>
+        </select>
+    </div>
+
+    <main id="maincontent">
+        <section id="about">
+            <p>
+                Welcome to the Colors of Life showcase. This responsive gallery demonstrates modern web design:
+                adapting to mobile, tablet, and desktop layouts, while also respecting user settings like reduced
+                motion and dark mode. Each color symbolizes creativity, vibrancy, and emotion.
+            </p>
+        </section>
+
+        <section id="gallery" class="gallery">
+            <figure>
+                <img src="https://placehold.co/400x300/ff0000/white?text=Red" alt="Bright red color swatch">
+                <figcaption>Red</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/ff8800/white?text=Orange" alt="Vibrant orange color swatch">
+                <figcaption>Orange</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/ffdd00/black?text=Yellow" alt="Sunny yellow color swatch">
+                <figcaption>Yellow</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/00ff00/black?text=Green" alt="Natural green color swatch">
+                <figcaption>Green</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/0088ff/white?text=Blue" alt="Calm blue color swatch">
+                <figcaption>Blue</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/6600ff/white?text=Indigo" alt="Deep indigo color swatch">
+                <figcaption>Indigo</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/aa00ff/white?text=Purple" alt="Royal purple color swatch">
+                <figcaption>Purple</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/ff66aa/black?text=Pink" alt="Soft pink color swatch">
+                <figcaption>Pink</figcaption>
+            </figure>
+            <figure>
+                <img src="https://placehold.co/400x300/ffffff/black?text=White" alt="Pure white color swatch">
+                <figcaption>White</figcaption>
+            </figure>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Color Showcase | Built for Accessibility & Responsiveness</p>
+    </footer>
+
+    <script>
+        // Layout selector functionality
+        const selector = document.getElementById("layoutSelect");
+        const body = document.body;
+
+        // Set initial view based on screen width
+        if (window.innerWidth >= 992) {
+            selector.value = "desktop";
+            body.classList.add("desktop-view");
+        } else if (window.innerWidth >= 772) {
+            selector.value = "tablet";
+            body.classList.add("tablet-view");
+        } else {
+            selector.value = "mobile";
+            body.classList.add("mobile-view");
+        }
+
+        selector.addEventListener("change", () => {
+            // Remove any existing layout classes
+            body.classList.remove("mobile-view", "tablet-view", "desktop-view");
+            
+            // Add the selected layout class
+            body.classList.add(selector.value + "-view");
+        });
+
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Check if reduced motion is preferred
+            const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+            
+            if (mediaQuery && mediaQuery.matches) {
+                // Jump to top without smooth scrolling
+                window.scrollTo(0, 0);
+            } else {
+                // Use smooth scrolling
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        // Update selector when window is resized
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 992 && !body.classList.contains("desktop-view")) {
+                selector.value = "desktop";
+                body.classList.remove("mobile-view", "tablet-view");
+                body.classList.add("desktop-view");
+            } else if (window.innerWidth >= 772 && window.innerWidth < 992 && 
+                      !body.classList.contains("tablet-view")) {
+                selector.value = "tablet";
+                body.classList.remove("mobile-view", "desktop-view");
+                body.classList.add("tablet-view");
+            } else if (window.innerWidth < 772 && !body.classList.contains("mobile-view")) {
+                selector.value = "mobile";
+                body.classList.remove("tablet-view", "desktop-view");
+                body.classList.add("mobile-view");
+            }
+        });
+    </script>
+</body>
+</html>
